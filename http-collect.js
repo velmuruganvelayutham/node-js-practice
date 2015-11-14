@@ -7,6 +7,7 @@ http.get(process.argv[2], function(response) {
         resBuffer.push(data);
     });
     response.on('end', function() {
+        console.log(resBuffer.join('').length);
         console.log(resBuffer.join(''));
     })
 });

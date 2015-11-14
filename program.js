@@ -4,3 +4,6 @@ for (var i in myArgs) {
     total += +(myArgs[i]);
 }
 console.log(total);
+
+
+
