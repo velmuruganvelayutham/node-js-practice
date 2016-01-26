@@ -1,32 +1,41 @@
 var http = require('http');
-var queue = [];
+var count=0;
+var get1=[];
+var get2=[];
+var get3=[];
 http.get(process.argv[2], function(response) {
 
     response.setEncoding('utf-8');
-    var resBuffer = [];
+   
     var url = process.argv[2];
+  // console.log(" process.argv[2] "+ url);
     response.on('data', function(data) {
-        resBuffer.push(data);
+        get1.push(data);
     });
     response.on('end', function() {
-        queue.push({
-            url: resBuffer.join('')
-        });
+      printResult();
+      
     })
 });
+function printResult(){
+	count++;
+      if(count===3){
+      console.log(get1.join(''));
+      console.log(get2.join(''));
+      console.log(get3.join(''));
+}
+}
 http.get(process.argv[3], function(response) {
 
     response.setEncoding('utf-8');
-    var resBuffer = [];
+  
     var url = process.argv[3];
-    console.log(url + "url");
+   // console.log(" process.argv[3] "+ url);
     response.on('data', function(data) {
-        resBuffer.push(data);
+        get2.push(data);
     });
-    response.on('end', function() {
-        queue.push(url);
-        queue.push(resBuffer.join(''));
-
+     response.on('end', function() {
+      printResult();
     })
 });
 
@@ -35,13 +44,13 @@ http.get(process.argv[4], function(response) {
     response.setEncoding('utf-8');
     var resBuffer = [];
     var url = process.argv[4];
+  //console.log(" process.argv[4] "+ url);
     response.on('data', function(data) {
-        resBuffer.push(data);
+        get3.push(data);
     });
-    response.on('end', function() {
-        queue.push({
-            url: resBuffer.join('')
-        });
-        console.log(queue);
+      response.on('end', function() {
+       printResult();
     })
+      
+   
 });
